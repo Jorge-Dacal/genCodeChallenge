@@ -1,5 +1,5 @@
-import { Gen } from "../gen";
+import { Gene } from "../gene";
 
 export class RNASequencesDto {
-  genes: Gen[]
+  genes: Gene[]
 }

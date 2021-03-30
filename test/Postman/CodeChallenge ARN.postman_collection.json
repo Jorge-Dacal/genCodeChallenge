@@ -141,7 +141,7 @@
 			"response": []
 		},
 		{
-			"name": "arnSelectFile Real 5 First Gen Sequences",
+			"name": "arnSelectFile Real 5 First Gene Sequences",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -170,7 +170,7 @@
 			"response": []
 		},
 		{
-			"name": "arnSelectFile Real Full Gen Sequences",
+			"name": "arnSelectFile Real Full Gene Sequences",
 			"request": {
 				"method": "POST",
 				"header": [],

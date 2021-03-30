@@ -18,7 +18,7 @@ export class RNASequencesController {
   }
 
   @Get("nextGen")
-  getNextGen(): ProcessRNASequenceDto {
-    return this.rnaSequencesService.getNextGen();
+  getNextGene(): ProcessRNASequenceDto {
+    return this.rnaSequencesService.getNextGene();
   }
 }

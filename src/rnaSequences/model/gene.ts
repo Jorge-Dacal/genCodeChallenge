@@ -1,8 +1,8 @@
 import { Codon } from "./codon";
 
-export class Gen {
-  public static readonly ERROR_GEN_COMPLETE: string = "ERROR: The gen is completed and you cannot add more codons."
-  public static readonly ERROR_CODON_INCOMPLETE: string = "ERROR: The sequence of the codon '$codon' is not completed. To be added to gen it must have 3 nucleotides."
+export class Gene {
+  public static readonly ERROR_GEN_COMPLETE: string = "ERROR: The gene is completed and you cannot add more codons."
+  public static readonly ERROR_CODON_INCOMPLETE: string = "ERROR: The sequence of the codon '$codon' is not completed. To be added to gene it must have 3 nucleotides."
 
   constructor(
     private codons?: Codon[]
@@ -16,15 +16,15 @@ export class Gen {
   }
 
   /**
-   * Add a codon to the codons list of the genonly if gen is not complete.
+   * Add a codon to the codons list of the genonly if gene is not complete.
    * @param codon The codon to add.
    */
   public addCodon(codon: Codon): void {
     if (this.isComplete()) {
-      throw Error(Gen.ERROR_GEN_COMPLETE);
+      throw Error(Gene.ERROR_GEN_COMPLETE);
     }
     if (!codon.isComplete()) {
-      const errorMessage = Gen.ERROR_CODON_INCOMPLETE.replace("$codon", codon.getSequence());
+      const errorMessage = Gene.ERROR_CODON_INCOMPLETE.replace("$codon", codon.getSequence());
       throw Error(errorMessage);
     }
     if (codon.isStopCodon()) {
@@ -38,7 +38,7 @@ export class Gen {
   }
 
   /**
-   * @returns If the gen is completed with a sequence of codons that finish with a stop codon
+   * @returns If the gene is completed with a sequence of codons that finish with a stop codon
    */
   public isComplete(): boolean {
     if (this.isNotEmpty()) {

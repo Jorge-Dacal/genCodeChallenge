@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ProcessRNASequenceDto } from '../../model/dto/process-rnaSequence.dto';
 import { Codon } from '../../model/codon';
-import { Gen } from '../../model/gen';
+import { Gene } from '../../model/gene';
 import { CommentAndIgnoreCharacters } from '../../model/commentAndIgnoreCharacters';
 import { ReadStream } from 'fs';
 import { FileNotLoadException } from '../../exceptions/fileNotLoad.exception';
@@ -9,9 +9,9 @@ import { RNASequenceDataException } from '../../exceptions/invalidRNASequenceDat
 
 @Injectable()
 export class NextGenUseCase {
-  private generatorSecuence: Generator<Gen>
+  private generatorSecuence: Generator<Gene>
   private codon: Codon;
-  private gen: Gen;
+  private gene: Gene;
   private commentAndIgnoreCharacters: CommentAndIgnoreCharacters;
 
   public static ERROR_PROCESS_RNA_SEQUENCE = "ERROR: error during process RNA Sequence. Resetting all values to start from the scratch. REASON:\n    $e"
@@ -26,22 +26,22 @@ export class NextGenUseCase {
   }
 
   /**
-   * A function to obtain the next gen of the sequence in the file.
-   * @returns The process secuence of the next gen.
+   * A function to obtain the next gene of the sequence in the file.
+   * @returns The process secuence of the next gene.
    */
-  public getNextGen(): ProcessRNASequenceDto {
+  public getNextGene(): ProcessRNASequenceDto {
     let res: ProcessRNASequenceDto = new ProcessRNASequenceDto();
     if (this.generatorSecuence == undefined) {
       throw new FileNotLoadException();
     }
     try {
-      const genIterator: IteratorResult<Gen> = this.generatorSecuence.next();
+      const genIterator: IteratorResult<Gene> = this.generatorSecuence.next();
       if (genIterator.done) {
         res.complete();
       }
       if (genIterator.value != undefined) {
-        const gen: Gen = genIterator.value;
-        res.setGen(gen);
+        const gene: Gene = genIterator.value;
+        res.setGene(gene);
       }
       return res;
     } catch (e) {
@@ -50,11 +50,11 @@ export class NextGenUseCase {
   }
 
   /**
-   * A function to process a file and obtain gen sequences of it.
+   * A function to process a file and obtain gene sequences of it.
    * @param readStream The file to analyze.
-   * @returns The process secuence of the first gen found.
+   * @returns The process secuence of the first gene found.
    */
-  private * processRNASequence(readStream: ReadStream): Generator<Gen> {
+  private * processRNASequence(readStream: ReadStream): Generator<Gene> {
     try {
       let br: string | Buffer;
       while (null !== (br = readStream.read(1))) {
@@ -62,10 +62,10 @@ export class NextGenUseCase {
         if (!this.commentAndIgnoreCharacters.characterMustBeIgnored(c)){
           this.codon.addNucleotide(c);
           if (this.codon.isComplete()) {
-            this.gen.addCodon(this.codon);
-            if (this.gen.isComplete()) {
-              yield this.gen; // Return gen and wait for next invocation
-              this.gen = new Gen(); // Reboot for new gen
+            this.gene.addCodon(this.codon);
+            if (this.gene.isComplete()) {
+              yield this.gene; // Return gene and wait for next invocation
+              this.gene = new Gene(); // Reboot for new gen
             }
             this.codon = new Codon(); // Reboot codon for new sequence
           }
@@ -85,7 +85,7 @@ export class NextGenUseCase {
    */
   private resetGeneratorSecuence(): void {
     this.generatorSecuence = undefined;
-    this.gen = new Gen();
+    this.gene = new Gene();
     this.codon = new Codon();
     this.commentAndIgnoreCharacters = new CommentAndIgnoreCharacters();
   }

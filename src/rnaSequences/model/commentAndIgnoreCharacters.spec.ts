@@ -17,7 +17,7 @@ describe('CommentAndIgnoreCharacters', () => {
     ).toBe(false);
   });
   
-  it('CarriageReturn, witheSpace and tab characters must be ignored', () => {
+  it('CarriageReturn, witheSpace and tab characters must be ignored.', () => {
     commentAndIgnoreCharacters = new CommentAndIgnoreCharacters();
     expect(
       commentAndIgnoreCharacters.characterMustBeIgnored(carriageReturn)
@@ -30,7 +30,7 @@ describe('CommentAndIgnoreCharacters', () => {
     ).toBe(true);
   });
 
-  it('Comments works', () => {
+  it('Comments works and ignore the charactes even if they were not normally.', () => {
     commentAndIgnoreCharacters = new CommentAndIgnoreCharacters();
     expect(
       commentAndIgnoreCharacters.characterMustBeIgnored(comment)
@@ -40,7 +40,7 @@ describe('CommentAndIgnoreCharacters', () => {
     ).toBe(true);
   });
 
-  it('Comments ends with an endline', () => {
+  it('Comments ends with an endline and the next character is not ignored.', () => {
     commentAndIgnoreCharacters = new CommentAndIgnoreCharacters();
     expect(
       commentAndIgnoreCharacters.characterMustBeIgnored(comment)
@@ -53,7 +53,7 @@ describe('CommentAndIgnoreCharacters', () => {
     ).toBe(false);
   });
 
-  it('Try that comment cannot start at mid sentence', () => {
+  it('Try that comment cannot start at mid sentence.', () => {
     commentAndIgnoreCharacters = new CommentAndIgnoreCharacters();
     expect(
       commentAndIgnoreCharacters.characterMustBeIgnored(witheSpace)
@@ -63,7 +63,7 @@ describe('CommentAndIgnoreCharacters', () => {
     ).toBe(false);
   });
 
-  it('comment can start after endline', () => {
+  it('Comment can start after endline.', () => {
     commentAndIgnoreCharacters = new CommentAndIgnoreCharacters();
     expect(
       commentAndIgnoreCharacters.characterMustBeIgnored(endline)

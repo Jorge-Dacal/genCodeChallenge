@@ -2,13 +2,13 @@ import { Nucleotides } from "./enum/nucleotides.enum";
 import { StopCodons } from "./enum/stopCodons.enum";
 
 export class Codon {
-  private sequence: string;
-
   public static readonly ERROR_NOT_NUCLEOTIDE: string = "ERROR: The nucleotide '$nucleotide' is not valid. Nucleotides can only be: " + Object.keys(Nucleotides);
   public static readonly ERROR_CODON_COMPLETE: string = "ERROR: A sequence of nucleotides can only contains 3, you cannot add more."
   public static readonly ERROR_INVALID_SEQUENCE: string = "ERROR: The sequence '$sequence' is not a valid sequence to be set. REASON:\n  $e"
 
-  constructor(sequence?: string) {
+  constructor(
+    private sequence?: string
+  ) {
     if(sequence != undefined) {
       this.setSequence(sequence);
     } else {
@@ -20,7 +20,7 @@ export class Codon {
    * Add a nucleotide to the codon sequence.
    * @param nucleotide Nucleotide to be added in the sequence
    */
-   public addNucleotide(nucleotide: string) {
+   public addNucleotide(nucleotide: string): void {
 
     nucleotide = nucleotide.toLowerCase();
     if (!this.isNucleotide(nucleotide)) {

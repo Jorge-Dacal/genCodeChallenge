@@ -17,7 +17,7 @@ describe('Codon', () => {
     ).toBe(goodSequence.toLowerCase());
   });
 
-  it('Create a valid codon', () => {
+  it('Create a valid codon.', () => {
     codon = new Codon(goodSequence)
     expect(
       codon.getSequence()
@@ -56,7 +56,7 @@ describe('Codon', () => {
     ).toBe(nucleotide.toLowerCase());
   });
 
-  it('Add a valid nucleotide to codon', () => {
+  it('Add a valid nucleotide to codon.', () => {
     codon = new Codon()
     codon.addNucleotide(nucleotide)
     expect(
@@ -73,7 +73,7 @@ describe('Codon', () => {
     );
   });
 
-  it('Try to add a valid nucleotide when codon is complete', () => {
+  it('Try to add a valid nucleotide when codon is complete.', () => {
     codon = new Codon(goodSequence);
     expect(
       () => codon.addNucleotide(nucleotide)
@@ -82,28 +82,28 @@ describe('Codon', () => {
     );
   });
 
-  it('Check that codon is not completed', () => {
+  it('Check that codon is not completed.', () => {
     codon = new Codon(nucleotide);
     expect(
       codon.isComplete()
     ).toBe(false);
   });
 
-  it('Check that codon is comleted', () => {
+  it('Check that codon is comleted.', () => {
     codon = new Codon(stopCodon);
     expect(
       codon.isComplete()
     ).toBe(true);
   });
 
-  it('Codon is a stop codon', () => {
+  it('Codon is a stop codon.', () => {
     codon = new Codon(stopCodon);
     expect(
       codon.isStopCodon()
     ).toBe(true);
   });
 
-  it('Codon is not a stop codon', () => {
+  it('Codon is not a stop codon.', () => {
     codon = new Codon(goodSequence);
     expect(
       codon.isStopCodon()

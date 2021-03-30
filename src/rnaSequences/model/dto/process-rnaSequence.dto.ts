@@ -1,14 +1,14 @@
-import { Gen } from "../gen";
+import { Gene } from "../gene";
 
 export class ProcessRNASequenceDto {
   constructor(
-    private gen?: Gen,
+    private gene?: Gene,
     private next?: boolean
   ) {
-    if(gen != undefined) {
-      this.setGen(gen)
+    if(gene != undefined) {
+      this.setGene(gene)
     } else {
-      this.gen = new Gen();
+      this.gene = new Gene();
     }
     if(next != undefined) {
       this.next = next;
@@ -18,35 +18,35 @@ export class ProcessRNASequenceDto {
   }
 
   /**
-   * Set the gen of the rna sequence analized
-   * @param gen A gen completed
+   * Set the gene of the rna sequence analized
+   * @param gene A gene completed
    */
-  setGen(gen: Gen) {
-    if(gen.isComplete) {
-      this.gen = gen;
+  public setGene(gene: Gene): void {
+    if(gene.isComplete) {
+      this.gene = gene;
     } else {
-      throw Error("ERROR: The gen is completed and you cannot add more codons.'");
+      throw Error("ERROR: The gene is completed and you cannot add more codons.'");
     }
   }
 
   /**
-   * @returns The gen analized
+   * @returns The gene analized
    */
-  getGen() {
-    return this.gen;
+  public getGene(): Gene {
+    return this.gene;
   }
 
   /**
-   * @returns If the sequence of genes have more characteres to be analized that maybe returns a new gen.
+   * @returns If the sequence of genes have more characteres to be analized that maybe returns a new gene.
    */
-  hasNext() {
+  public hasNext(): boolean {
     return this.next;
   }
 
   /**
    * @returns If the sequence of genes is complete and there is no more genes to be analized.
    */
-  complete() {
+  public complete(): boolean {
     return this.next = false;
   }
 }

@@ -1,6 +1,6 @@
-import { NextGenUseCase } from "./nextGen.use-case";
+import { NextGenUseCase } from "./nextGene.use-case";
 import { Codon } from "./../../model/codon";
-import { Gen } from "./../../model/gen";
+import { Gene } from "../../model/gene";
 import { CommentAndIgnoreCharacters } from "./../../model/commentAndIgnoreCharacters";
 import { ProcessRNASequenceDto } from "./../../model//dto/process-rnaSequence.dto";
 import { FileNotLoadException } from "../../exceptions/fileNotLoad.exception";
@@ -8,7 +8,7 @@ import { RNASequenceDataException } from "../../exceptions/invalidRNASequenceDat
 import { createReadStream, ReadStream } from "fs";
 
 describe('NextGenUseCase', () => {
-  let nextGen: NextGenUseCase;
+  let nextGene: NextGenUseCase;
   
   const invalidCharacter: string = "j";
   
@@ -16,53 +16,53 @@ describe('NextGenUseCase', () => {
   const invalidCommentInMidSequencePath: string = "./test/rnaSequences/files/invalidCommentInMidSequence.txt"
   const simpleSequencePath: string = "./test/rnaSequences/files/simpleSequence.txt"
 
-  it('Try to use getNextGen before to set the file to be analyzed', () => {
-    nextGen = new NextGenUseCase();
+  it('Try to use getNextGene before to set the file to be analyzed', () => {
+    nextGene = new NextGenUseCase();
     expect(
       () => {
-        nextGen.getNextGen()
+        nextGene.getNextGene()
       }
     ).toThrow(new FileNotLoadException());
   });
 
-  it('Try to use getNextGen after to set a File that contains a not valid character', async () => {
+  it('Try to use getNextGene after to set a File that contains a not valid character', async () => {
     selectFile(invalidCharacterPath);
     await delay(1000);
     expect(
-      () => nextGen.getNextGen()
+      () => nextGene.getNextGene()
       ).toThrow(
         rnaSequenceDataException(invalidCharacter)
       );
   });
 
-  it('Try to use getNextGen after to set a File that contains a comment character in middle of the line', async () => {
+  it('Try to use getNextGene after to set a File that contains a comment character in middle of the line', async () => {
     selectFile(invalidCommentInMidSequencePath);
     await delay(1000);
     expect(
-      () => nextGen.getNextGen()
+      () => nextGene.getNextGene()
     ).toThrow(
       rnaSequenceDataException(CommentAndIgnoreCharacters.COMMENT_CHARACTER)
     );
   });
 
-  it('use getNextGen to obtain the next', async () => {
+  it('use getNextGene to obtain the next', async () => {
     selectFile(simpleSequencePath);
     const rnaSequence: ProcessRNASequenceDto =  new ProcessRNASequenceDto(
-      new Gen([
+      new Gene([
         new Codon("aaa"),
         new Codon("uag")
       ]),
       true
     )
     await delay(1000);
-    const res: ProcessRNASequenceDto = nextGen.getNextGen();
+    const res: ProcessRNASequenceDto = nextGene.getNextGene();
     expect(res).toStrictEqual(rnaSequence);
   });
 
   function selectFile(filePath: string) {
     const readStream: ReadStream = createReadStream(filePath);
     readStream.pause();
-    nextGen.setGeneratorSecuence(readStream);
+    nextGene.setGeneratorSecuence(readStream);
   }
 
   function rnaSequenceDataException(nucleotide: string): RNASequenceDataException {

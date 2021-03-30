@@ -2,12 +2,12 @@ import { Injectable } from '@nestjs/common';
 import { ProcessRNASequenceDto } from '../model/dto/process-rnaSequence.dto';
 import { SelectFileUseCase } from './use-case/selectFile.use-case';
 import { GetHelpRNASequencesUseCase } from './use-case/getHelpRNASequences.use-case';
-import { NextGenUseCase } from './use-case/nextGen.use-case';
+import { NextGenUseCase } from './use-case/nextGene.use-case';
 
 @Injectable()
 export class RNASequencesService {
   private readonly selectFile: SelectFileUseCase = new SelectFileUseCase();
-  private readonly nextGen: NextGenUseCase = new NextGenUseCase();
+  private readonly nextGene: NextGenUseCase = new NextGenUseCase();
 
   /**
    * A function that return how we can use the service
@@ -23,15 +23,15 @@ export class RNASequencesService {
    */
   public setSelectFile(rnafilepath: string): void {
     const readStream = this.selectFile.createReadStream(rnafilepath);
-    this.nextGen.setGeneratorSecuence(readStream);
+    this.nextGene.setGeneratorSecuence(readStream);
     process.stdout.write("File selected: " + rnafilepath + "\n\n");
   }
 
   /**
-   * A function to obtain the next gen of the sequence in the file.
-   * @returns The process secuence of the next gen.
+   * A function to obtain the next gene of the sequence in the file.
+   * @returns The process secuence of the next gene.
    */
-  public getNextGen(): ProcessRNASequenceDto {
-    return this.nextGen.getNextGen();
+  public getNextGene(): ProcessRNASequenceDto {
+    return this.nextGene.getNextGene();
   }
 }
