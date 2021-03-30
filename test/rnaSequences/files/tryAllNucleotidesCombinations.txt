@@ -1,0 +1,29 @@
+>starts with a
+aaa aac aag aau
+aca acc acg acu
+aga agc agg agu
+aua auc aug auu
+
+>starts with c
+caa cac cag cau
+cca ccc ccg ccu
+cga cgc cgg cgu
+cua cuc cug cuu
+
+>starts with g
+gaa gac gag gau
+gca gcc gcg gcu
+gga ggc ggg ggu
+gua guc gug guu
+
+>starts with u
+uaa uac uag uau
+uca ucc ucg ucu
+uga ugc ugg ugu
+uua uuc uug uuu
+
+>Result should be
+>gen1: aaa aac aag aau aca acc acg acu aga agc agg agu aua auc aug auu caa cac cag cau cca ccc ccg ccu cga cgc cgg cgu cua cuc cug cuu gaa gac gag gau gca gcc gcg gcu gga ggc ggg ggu gua guc gug guu uaa
+>gen2: uac uag
+>gen3: uau uca ucc ucg ucu uga
+>restNotGen, Is noise: ugc ugg ugu uua uuc uug uuu

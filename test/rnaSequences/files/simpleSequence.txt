@@ -1,0 +1,6 @@
+aaa uag ccc uag uuu uag
+
+>Result should be
+>gen1: aaa uag
+>gen2: ccc uag
+>gen3: uuu uag
