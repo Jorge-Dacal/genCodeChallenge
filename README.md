@@ -92,6 +92,10 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
+### Result of the tests executed in the stable versions released
+**Test of v1.0.0**
+![image](./images/Test_Results_v1.0.0.jpg)
+
 ## Solution
 
 The solution used to solve this challenge is full described in the [wiki](../../wiki) of this project.
