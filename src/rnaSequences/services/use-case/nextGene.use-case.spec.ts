@@ -16,7 +16,7 @@ describe('NextGenUseCase', () => {
   const invalidCommentInMidSequencePath: string = "./test/rnaSequences/files/invalidCommentInMidSequence.txt"
   const simpleSequencePath: string = "./test/rnaSequences/files/simpleSequence.txt"
 
-  it('Try to use getNextGene before to set the file to be analyzed', () => {
+  it('Try to use getNextGene before to set the file to be analyzed.', () => {
     nextGene = new NextGenUseCase();
     expect(
       () => {
@@ -25,7 +25,7 @@ describe('NextGenUseCase', () => {
     ).toThrow(new FileNotLoadException());
   });
 
-  it('Try to use getNextGene after to set a File that contains a not valid character', async () => {
+  it('Try to use getNextGene after to set a File that contains a not valid character.', async () => {
     selectFile(invalidCharacterPath);
     await delay(1000);
     expect(
@@ -35,7 +35,7 @@ describe('NextGenUseCase', () => {
       );
   });
 
-  it('Try to use getNextGene after to set a File that contains a comment character in middle of the line', async () => {
+  it('Try to use getNextGene after to set a File that contains a comment character in middle of the line.', async () => {
     selectFile(invalidCommentInMidSequencePath);
     await delay(1000);
     expect(
@@ -45,18 +45,40 @@ describe('NextGenUseCase', () => {
     );
   });
 
-  it('use getNextGene to obtain the next', async () => {
+  it('Use getNextGene to obtain the next Genes until the end of a file that contains 3 genes.', async () => {
     selectFile(simpleSequencePath);
-    const rnaSequence: ProcessRNASequenceDto =  new ProcessRNASequenceDto(
+    const gene1: ProcessRNASequenceDto =  new ProcessRNASequenceDto(
       new Gene([
         new Codon("aaa"),
         new Codon("uag")
       ]),
       true
-    )
+    );
+    const gene2: ProcessRNASequenceDto =  new ProcessRNASequenceDto(
+      new Gene([
+        new Codon("ccc"),
+        new Codon("uag")
+      ]),
+      true
+    );
+    const gene3: ProcessRNASequenceDto =  new ProcessRNASequenceDto(
+      new Gene([
+        new Codon("uuu"),
+        new Codon("uag")
+      ]),
+      true
+    );
+    const readEndFile: ProcessRNASequenceDto =  new ProcessRNASequenceDto(
+      new Gene(),
+      false
+    );
+    const rnaSequences: ProcessRNASequenceDto[] = [gene1, gene2, gene3, readEndFile];
     await delay(1000);
-    const res: ProcessRNASequenceDto = nextGene.getNextGene();
-    expect(res).toStrictEqual(rnaSequence);
+    const res: ProcessRNASequenceDto[] = [];
+    for(let i = 0; i < 4; i++) {
+      res.push(nextGene.getNextGene());
+      expect(res[i]).toStrictEqual(rnaSequences[i]);
+    }
   });
 
   function selectFile(filePath: string) {

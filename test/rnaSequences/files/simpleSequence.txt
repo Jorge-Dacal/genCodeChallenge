@@ -1,6 +1,1 @@
 aaa uag ccc uag uuu uag
-
->Result should be
->gene1: aaa uag
->gene2: ccc uag
->gene3: uuu uag

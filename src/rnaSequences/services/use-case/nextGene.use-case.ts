@@ -32,12 +32,14 @@ export class NextGenUseCase {
   public getNextGene(): ProcessRNASequenceDto {
     let res: ProcessRNASequenceDto = new ProcessRNASequenceDto();
     if (this.generatorSecuence == undefined) {
+      this.resetGeneratorSecuence();
       throw new FileNotLoadException();
     }
     try {
       const genIterator: IteratorResult<Gene> = this.generatorSecuence.next();
       if (genIterator.done) {
         res.complete();
+        this.resetGeneratorSecuence(); // When finish, we need to unset everything like if we start from the scratch
       }
       if (genIterator.value != undefined) {
         const gene: Gene = genIterator.value;
@@ -45,6 +47,7 @@ export class NextGenUseCase {
       }
       return res;
     } catch (e) {
+      this.resetGeneratorSecuence(); // On error, we need to unset everything like if we start from the scratch
       throw new RNASequenceDataException(e);
     }
   }
@@ -63,19 +66,18 @@ export class NextGenUseCase {
           this.codon.addNucleotide(c);
           if (this.codon.isComplete()) {
             this.gene.addCodon(this.codon);
+            this.codon = new Codon(); // Reboot codon for new sequence
             if (this.gene.isComplete()) {
               yield this.gene; // Return gene and wait for next invocation
               this.gene = new Gene(); // Reboot for new gen
-            }
-            this.codon = new Codon(); // Reboot codon for new sequence
+            }            
           }
         }
       }
       readStream.close();
-      this.resetGeneratorSecuence(); // When finish, we need to unset everything like if we start from the scratch
     }catch (e) {
       const errorMessage = NextGenUseCase.ERROR_PROCESS_RNA_SEQUENCE.replace("$e",e.message);
-      this.resetGeneratorSecuence();
+      readStream.close();
       throw new Error(errorMessage);
     }
   }
