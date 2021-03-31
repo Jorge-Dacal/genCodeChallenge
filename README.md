@@ -112,3 +112,8 @@ The solution used to solve this challenge is full described in the [wiki](../../
 - This project is [Apache 2.0 licensed](LICENSE)
 - Nest is [MIT licensed](LICENSE.Mit).
 
+## Thanks to
+
+I want to give special thanks to my friend [Angel Jose Egea Ruiz](https://github.com/AngelEgea) who provided me with a master class on what Streams are and help me to solve some issues as a Backend Expert.
+
+Thank you very much Angel.
