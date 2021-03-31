@@ -56,7 +56,7 @@ The application has three endpoints:
   }
   ```
 
-To learn more about the solution used for this challenge read the wiki of this project.
+To learn more about the solution used for this challenge read the [wiki](../../wiki) of this project.
 
 This project use [Nest](https://github.com/nestjs/nest) framework.
 
@@ -94,7 +94,7 @@ $ npm run test:cov
 
 ## Solution
 
-The solution used to solve this challenge is full described in the wiki of this project.
+The solution used to solve this challenge is full described in the [wiki](../../wiki) of this project.
 
 ## Stay in touch
 
